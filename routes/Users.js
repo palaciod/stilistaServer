@@ -90,8 +90,19 @@ router.post("/register", (req, res) => {
   }
 });
 
-// Update User email and password Form
+// Update User email and name Form
 router.put("/update/:id", (req, res) => {
+  let errors = [];
+  if (!req.body.name) {
+    errors.push({ text: "Must enter a name." });
+  }
+  if (!req.body.email) {
+    errors.push({ text: "Must enter an email." });
+  }
+  if (errors.length > 0) {
+    console.log(errors);
+    res.send("Must fill in all requirments");
+  }
   User.findOne({
     _id: req.params.id
   }).then(user => {
