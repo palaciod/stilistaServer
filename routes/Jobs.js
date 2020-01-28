@@ -21,6 +21,28 @@ router.get("/:id", (req, res) => {
     });
 });
 
+// Edit Job Status
+router.put("/update/:id", (req, res) => {
+  if (!req.body.status) {
+    res.send("Failed status update.");
+  } else {
+    Job.findOne({
+      _id: req.params.id
+    }).then(job => {
+      if (!job) {
+        res.send("Did not find job posting.");
+        console.log("Did not find the job posting.");
+      } else {
+        job.status = req.body.status;
+        // Update appoitment date
+        job.save();
+        res.json(job);
+        console.log("Edited Job Posting");
+      }
+    });
+  }
+});
+
 // Update Job Form
 router.put("/update/:id", (req, res) => {
   Job.findOne({
