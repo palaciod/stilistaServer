@@ -92,6 +92,7 @@ router.post("/register", (req, res) => {
 
 // Update User email and name Form
 router.put("/update/:id", (req, res) => {
+  console.log("Editing user");
   let errors = [];
   if (!req.body.name) {
     errors.push({ text: "Must enter a name." });
@@ -106,12 +107,17 @@ router.put("/update/:id", (req, res) => {
   User.findOne({
     _id: req.params.id
   }).then(user => {
-    user.email = req.body.email;
-    user.name = req.body.name;
-    // Update appoitment date
-    user.save();
-    res.json(user);
-    console.log("Edited User Profile");
+    if (user) {
+      user.email = req.body.email;
+      user.name = req.body.name;
+      // Update appoitment date
+      user.save();
+      res.json(user);
+      console.log("Edited User Profile");
+    } else {
+      res.send("User not found");
+      console.log("User not found");
+    }
   });
 });
 
