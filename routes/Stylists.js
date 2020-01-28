@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 require("../models/Stylist");
@@ -110,7 +109,7 @@ router.post("/near", (req, res, next) => {
         }
       }
     }).find((error, results) => {
-      if (error) console.log(error);
+      if (error) console.log(" i am failing here");
       console.log(results);
       res.json(results);
     });
