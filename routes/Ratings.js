@@ -17,6 +17,17 @@ router.get("/:id", (req, res) => {
       res.send(error);
     });
 });
+router.get("/reviewsFor/:id", (req, res) => {
+  Rating.find({ stylist: req.params.id })
+    .then(rating => {
+      console.log(rating);
+      res.json(rating);
+    })
+    .catch(error => {
+      console.log(error);
+      res.send(error);
+    });
+});
 
 router.put("/editRatings/:id", (req, res) => {
   Rating.findOne({
