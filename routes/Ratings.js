@@ -59,7 +59,8 @@ router.post("/postRatings/:id", (req, res) => {
       stylist: req.body.stylist,
       client: req.params.id,
       value: req.body.value,
-      review: req.body.review
+      review: req.body.review,
+      name: req.body.name
     };
     new Rating(newRating).save().then(rating => {
       res.send(rating);
