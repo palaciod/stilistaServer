@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 
-const UserSchema = new Schema({
+const RatingSchema = new Schema({
   stylist: {
     type: String,
     required: true
@@ -16,10 +16,14 @@ const UserSchema = new Schema({
     type: Number,
     required: true
   },
+  review: {
+    type: String,
+    required: true
+  },
   date: {
     type: Date,
     default: Date.now()
   }
 });
 
-mongoose.model("Ratings", UserSchema);
+mongoose.model("Ratings", RatingSchema);

@@ -23,6 +23,7 @@ router.put("/editRatings/:id", (req, res) => {
     client: req.params.id
   }).then(rating => {
     rating.value = req.body.value;
+    rating.review = req.body.review;
     // Update appoitment date
     rating.save();
     res.json(rating);
@@ -46,13 +47,23 @@ router.post("/postRatings/:id", (req, res) => {
     const newRating = {
       stylist: req.body.stylist,
       client: req.params.id,
-      value: req.body.value
+      value: req.body.value,
+      review: req.body.review
     };
     new Rating(newRating).save().then(rating => {
       res.send(rating);
       console.log("Completed Rating");
     });
   }
+});
+
+router.delete("/delete/:id", (req, res) => {
+  Rating.deleteOne({
+    _id: req.params.id
+  }).then(() => {
+    res.send("Deleted");
+    console.log("Deleted Rating");
+  });
 });
 
 module.exports = router;
