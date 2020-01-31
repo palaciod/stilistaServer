@@ -29,7 +29,7 @@ const StylistSchema = new Schema({
   },
   rating: {
     type: Number,
-    required: false
+    required: true
   },
 
   date: {

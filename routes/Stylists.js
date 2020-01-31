@@ -122,16 +122,21 @@ router.get("/", (req, res) => {
 });
 
 // Update Job Form
-router.put("/update/:id", (req, res) => {
-  Stylist.findOne({
-    _id: req.params.id
-  }).then(job => {
-    job.message = req.body.message;
-    // Update appoitment date
-    job.save();
-    res.json(job);
-    console.log("Edited Stylist Profile");
-  });
+router.put("/updateRating/:id", (req, res) => {
+  if (!req.body.rating) {
+    console.log("Failed to get rating");
+    res.send("No Rating");
+  } else {
+    Stylist.findOne({
+      _id: req.params.id
+    }).then(stylist => {
+      stylist.rating = req.body.rating;
+      // Update appoitment date
+      stylist.save();
+      res.json(stylist);
+      console.log("Edited Stylist Profile");
+    });
+  }
 });
 
 // Delete Form
