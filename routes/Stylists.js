@@ -121,7 +121,7 @@ router.get("/", (req, res) => {
   console.log(req.session);
 });
 
-// Update Job Form
+// Update Rating Value Form
 router.put("/updateRating/:id", (req, res) => {
   if (!req.body.rating) {
     console.log("Failed to get rating");
@@ -131,6 +131,28 @@ router.put("/updateRating/:id", (req, res) => {
       _id: req.params.id
     }).then(stylist => {
       stylist.rating = req.body.rating;
+      // Update appoitment date
+      stylist.save();
+      res.json(stylist);
+      console.log("Edited Stylist Profile");
+    });
+  }
+});
+
+// Update Stylist Name and Email Form
+router.put("/update/:id", (req, res) => {
+  if (!req.body.name) {
+    console.log("Failed to get name");
+    res.send("No name");
+  } else if (!req.body.email) {
+    console.log("Failed to get email");
+    res.send("No email");
+  } else {
+    Stylist.findOne({
+      _id: req.params.id
+    }).then(stylist => {
+      stylist.name = req.body.name;
+      stylist.email = req.body.email;
       // Update appoitment date
       stylist.save();
       res.json(stylist);
