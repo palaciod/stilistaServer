@@ -5,8 +5,9 @@ const passport = require("passport");
 const bcrypt = require("bcryptjs");
 require("../models/Rating");
 const Rating = mongoose.model("Ratings");
+const { ensureAuthentication } = require("../helpers/Auth");
 
-router.get("/:id", (req, res) => {
+router.get("/:id", ensureAuthentication, (req, res) => {
   Rating.findOne({ client: req.params.id })
     .then(rating => {
       console.log(rating);
@@ -17,7 +18,7 @@ router.get("/:id", (req, res) => {
       res.send(error);
     });
 });
-router.get("/reviewsFor/:id", (req, res) => {
+router.get("/reviewsFor/:id", ensureAuthentication, (req, res) => {
   Rating.find({ stylist: req.params.id })
     .then(rating => {
       console.log(rating);
@@ -29,7 +30,7 @@ router.get("/reviewsFor/:id", (req, res) => {
     });
 });
 
-router.put("/editRatings/:id", (req, res) => {
+router.put("/editRatings/:id", ensureAuthentication, (req, res) => {
   Rating.findOne({
     client: req.params.id
   }).then(rating => {
@@ -42,7 +43,7 @@ router.put("/editRatings/:id", (req, res) => {
   });
 });
 
-router.post("/postRatings/:id", (req, res) => {
+router.post("/postRatings/:id", ensureAuthentication, (req, res) => {
   let errors = [];
   if (!req.body.stylist) {
     errors.push({ text: "Must enter stylist id" });
@@ -69,7 +70,7 @@ router.post("/postRatings/:id", (req, res) => {
   }
 });
 
-router.delete("/delete/:id", (req, res) => {
+router.delete("/delete/:id", ensureAuthentication, (req, res) => {
   Rating.deleteOne({
     _id: req.params.id
   }).then(() => {

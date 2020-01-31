@@ -6,6 +6,7 @@ const passport = require("passport");
 require("../models/Stylist");
 const Stylist = mongoose.model("Stylists");
 require("../config/Passport")(passport);
+const { ensureAuthentication } = require("../helpers/Auth");
 // Login Form
 
 router.post("/login", (req, res, next) => {
@@ -83,7 +84,7 @@ router.post("/register", (req, res) => {
 
 // Default Search Stylist Form
 
-router.post("/near", (req, res, next) => {
+router.post("/near", ensureAuthentication, (req, res, next) => {
   let errors = [];
   if (!req.body.long) {
     errors.push({ text: "Must enter a longitude point." });
@@ -125,7 +126,7 @@ router.get("/", (req, res) => {
 });
 
 // Update Rating Value Form
-router.put("/updateRating/:id", (req, res) => {
+router.put("/updateRating/:id", ensureAuthentication, (req, res) => {
   if (!req.body.rating) {
     console.log("Failed to get rating");
     res.send("No Rating");
@@ -143,7 +144,7 @@ router.put("/updateRating/:id", (req, res) => {
 });
 
 // Update Stylist Name and Email Form
-router.put("/update/:id", (req, res) => {
+router.put("/update/:id", ensureAuthentication, (req, res) => {
   if (!req.body.name) {
     console.log("Failed to get name");
     res.send("No name");
@@ -166,7 +167,7 @@ router.put("/update/:id", (req, res) => {
 
 // Delete Form
 
-router.delete("/delete/:id", (req, res) => {
+router.delete("/delete/:id", ensureAuthentication, (req, res) => {
   Stylist.deleteOne({
     _id: req.params.id
   }).then(() => {
@@ -177,7 +178,7 @@ router.delete("/delete/:id", (req, res) => {
 
 // Get Stylist Details
 
-router.get("/:id", (req, res) => {
+router.get("/:id", ensureAuthentication, (req, res) => {
   Stylist.findOne({
     _id: req.params.id
   }).then(job => {

@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 require("../models/Job");
 const Job = mongoose.model("Jobs");
+const { ensureAuthentication } = require("../helpers/Auth");
 // Get Cookie Session
 router.get("/", (req, res) => {
   res.send(req.session);
@@ -11,7 +12,7 @@ router.get("/", (req, res) => {
 });
 
 // Get ALl Jobs
-router.get("/:id", (req, res) => {
+router.get("/:id", ensureAuthentication, (req, res) => {
   Job.find({ stylist: req.params.id })
     .sort({ date: -1 }) // 1 is acsending
     .then(jobs => {
@@ -22,7 +23,7 @@ router.get("/:id", (req, res) => {
 });
 
 // Edit Job Status
-router.put("/update/:id", (req, res) => {
+router.put("/update/:id", ensureAuthentication, (req, res) => {
   if (!req.body.status) {
     res.send("Failed status update.");
   } else {
@@ -44,7 +45,7 @@ router.put("/update/:id", (req, res) => {
 });
 
 // Update Job Form
-router.put("/update/:id", (req, res) => {
+router.put("/update/:id", ensureAuthentication, (req, res) => {
   Job.findOne({
     _id: req.params.id
   }).then(job => {
@@ -58,7 +59,7 @@ router.put("/update/:id", (req, res) => {
 
 // Delete Form
 
-router.delete("/delete/:id", (req, res) => {
+router.delete("/delete/:id", ensureAuthentication, (req, res) => {
   Job.deleteOne({
     _id: req.params.id
   }).then(() => {
@@ -69,7 +70,7 @@ router.delete("/delete/:id", (req, res) => {
 
 // Post Job Form
 
-router.post("/postJob/:id", (req, res) => {
+router.post("/postJob/:id", ensureAuthentication, (req, res) => {
   let errors = [];
   if (!req.body.stylist) {
     errors.push({ text: "Please add a title" });

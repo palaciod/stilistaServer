@@ -5,10 +5,10 @@ const passport = require("passport");
 const bcrypt = require("bcryptjs");
 require("../models/User");
 const User = mongoose.model("Users");
-
+const { ensureAuthentication } = require("../helpers/Auth");
 require("../config/Passport")(passport);
 
-router.get("/:id", (req, res) => {
+router.get("/:id", ensureAuthentication, (req, res) => {
   User.findOne({
     _id: req.params.id
   }).then(user => {
@@ -91,7 +91,7 @@ router.post("/register", (req, res) => {
 });
 
 // Update User email and name Form
-router.put("/update/:id", (req, res) => {
+router.put("/update/:id", ensureAuthentication, (req, res) => {
   console.log("Editing user");
   let errors = [];
   if (!req.body.name) {
@@ -123,7 +123,7 @@ router.put("/update/:id", (req, res) => {
 
 // Delete Form
 
-router.delete("/delete/:id", (req, res) => {
+router.delete("/delete/:id", ensureAuthentication, (req, res) => {
   User.deleteOne({
     _id: req.params.id
   }).then(() => {
