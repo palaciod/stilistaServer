@@ -109,9 +109,12 @@ router.post("/near", (req, res, next) => {
         }
       }
     }).find((error, results) => {
-      if (error) console.log(" i am failing here");
-      console.log(results);
-      res.json(results);
+      if (error) {
+        console.log(` i am failing here ${error}`);
+      } else {
+        console.log(results);
+        res.json(results);
+      }
     });
   }
 });
