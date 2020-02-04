@@ -7,7 +7,7 @@ require("../models/Rating");
 const Rating = mongoose.model("Ratings");
 const { ensureAuthentication } = require("../helpers/Auth");
 
-router.get("/:id", (req, res) => {
+router.get("/:id", ensureAuthentication, (req, res) => {
   Rating.find({ client: req.params.id })
     .then(rating => {
       console.log(rating);
@@ -48,8 +48,8 @@ router.post("/postRatings/:id", ensureAuthentication, (req, res) => {
   if (!req.body.stylist) {
     errors.push({ text: "Must enter stylist id" });
   }
-  if (!req.body.value) {
-    errors.push({ text: "Must enter a value." });
+  if (!req.body.review) {
+    errors.push({ text: "Must enter a review." });
   }
   if (errors.length > 0) {
     console.log("Fill in the required fields");
