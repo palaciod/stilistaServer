@@ -7,7 +7,7 @@ require("../models/Rating");
 const Rating = mongoose.model("Ratings");
 const { ensureAuthentication } = require("../helpers/Auth");
 
-router.get("/:id", ensureAuthentication, (req, res) => {
+router.get("/:id", (req, res) => {
   Rating.find({ client: req.params.id })
     .then(rating => {
       console.log(rating);
