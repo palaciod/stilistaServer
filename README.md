@@ -32,4 +32,4 @@ A user can sign up as a client or a hair stylist. After an appointment clients c
 7. Clients can filter the distance of neaby hair stylists.
 
 ### How Do We Locate Nearby Users?
- - Every type of user will show their location view the CLLocation provided by one of swift’s libraries. Once the geo location is stored in the cluster I use MongoDB’s custom geo query to sort the nearest users. 
+ - Every type of user will show their location via the CLLocation provided by one of swift’s libraries. Once the geo location is stored in the cluster I use MongoDB’s custom geo query to sort the nearest users. 
