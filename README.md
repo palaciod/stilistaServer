@@ -11,7 +11,7 @@ A user can sign up as a client or a hair stylist. After an appointment clients c
 1. JavaScript
 
 #### What can the app do?
-1. The app can authenticate users as clients or hair stylists
+1. The app can authenticate users 
 2. Allow clients to locate nearby hair stylists and check their reviews.
 3. Allow clients to post and delete reviews.
 4. Allow stylists to accept and decline jobs.
